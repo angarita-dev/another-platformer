@@ -13,8 +13,5 @@ node_modules/
 dist/
 /npm-debug.log
 
-# Package-lock
-package-lock.json
-
 # Swap files
 *.swp

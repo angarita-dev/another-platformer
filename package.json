@@ -1,5 +1,5 @@
 {
-  "name": "Another Platformer",
+  "name": "another-platformer",
   "version": "1.0.0",
   "description": "Simple open source platformer game",
   "main": "src/index.js",
@@ -32,4 +32,3 @@
     "phaser": "^3.20.1"
   }
 }
-
