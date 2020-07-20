@@ -12,3 +12,9 @@ node_modules/
 # Build
 dist/
 /npm-debug.log
+
+# Package-lock
+package-lock.json
+
+# Swap files
+*.swp
