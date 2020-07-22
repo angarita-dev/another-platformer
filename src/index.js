@@ -13,21 +13,52 @@ function preload() {
 }
 
 let platforms;
+let middleColumn = [];
+let sideColumn = [];
 let player;
+let camera;
+let shouldMoveCamera;
 
 function create() {
   // Adding Background
-  this.add.image(400, 300, 'sky');
+  this.add.image(400, 300, 'sky')
+    .setScrollFactor(1, 0);
 
   // Adding Platforms
   platforms = this.physics.add.staticGroup();
-  platforms.create(400, 568, 'platform').setScale(2).refreshBody();
-  platforms.create(600, 400, 'platform');
+
+
+  let floorX;
+  for (let i = 0; i < 6; i += 1){
+    const columnSelector = i % 2;
+    let x;
+    let platform;
+    const y = 600 - (146 * i); // Start generating platforms at bottom
+    switch (columnSelector) {
+      case 0:
+        x = Phaser.Math.Between(350, 450); 
+        if (i === 0) floorX = x;
+        platform = platforms.create(x, y, 'platform');
+        middleColumn.push(platform);
+        break;
+      case 1:
+        const randomBool = Math.random() >= 0.5;
+        x = randomBool ? 
+          Phaser.Math.Between(550, 650) :
+          Phaser.Math.Between(150, 250);
+        platform = platforms.create(x, y, 'platform');
+        sideColumn.push(platform);
+        break;
+    }
+    platform.scaleX = 0.5;
+    platform.refreshBody();
+  }
 
   // Adding Player
-  player = this.physics.add.sprite(100, 450, 'dude');
-  player.setBounce(0.01);
+  player = this.physics.add.sprite(floorX, 350, 'dude');
+  player.setBounce(0.06);
   player.setCollideWorldBounds(true);
+  this.physics.world.checkCollision.up = false;
 
   // Player animation
   this.anims.create({
@@ -52,17 +83,21 @@ function create() {
 
   // Adding Interaction between platforms & player
   this.physics.add.collider(player, platforms);
+
+  // Setting up Camera
+  camera = this.cameras.main;
 }
 
 function update() {
   // Control keys
-
   const cursors = this.input.keyboard.createCursorKeys();
   const touchingDown = player.body.touching.down;
   const playerXVelocity = player.body.velocity.x;
   const movingRight = cursors.right.isDown;
   const movingLeft = cursors.left.isDown;
   const movingUp = cursors.up.isDown;
+  const movingDown = cursors.down.isDown;
+
 
   if (movingRight) {
     player.anims.play('right', true);
@@ -82,10 +117,41 @@ function update() {
     player.anims.play('turn', true);
     player.setVelocityX(0);
   }
-
   if (movingUp && touchingDown) {
-    player.setVelocityY(-400);
+    player.body.velocity.y -= 400;
   }
+  if (movingDown) {
+    player.body.velocity.y += 20;
+  }
+
+
+  if (player.y <= 300) {
+    shouldMoveCamera = true;
+  }
+
+  // Camera follow
+  if (shouldMoveCamera) {
+    camera.scrollY = player.y - 300;
+  }
+
+  // Plafrom scrolling logic
+  platforms.children.iterate( platform => {
+    const scrollY = this.cameras.main.scrollY;
+    if (platform.y > scrollY + 700) {
+      let x;
+      if (sideColumn.includes(platform)) { 
+        const randomBool = Math.random() >= 0.5;
+        x = randomBool ? 
+          Phaser.Math.Between(550, 650) :
+          Phaser.Math.Between(150, 250);
+      } else {
+        x = Phaser.Math.Between(350, 400);
+      }
+      platform.y = scrollY - 180 + Phaser.Math.Between(-20, 20);
+      platform.x = x;
+      platform.body.updateFromGameObject();
+    }
+  });
 }
 
 const config = {
