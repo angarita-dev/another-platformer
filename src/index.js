@@ -14,8 +14,6 @@ function preload() {
 }
 
 let platforms;
-let middleColumn = [];
-let sideColumn = [];
 let player;
 let camera;
 
@@ -29,40 +27,20 @@ function create() {
   platforms = this.physics.add.group();
 
   let floorX;
-  for (let i = 0; i < 6; i += 1){
-    const columnSelector = i % 2;
-    let x;
-    let smallestX;
-    let biggestX;
-    let platform;
+  for (let i = 0; i < 6; i += 1) {
     const y = 600 - (146 * i); // Start generating platforms at bottom
-    switch (columnSelector) {
-      case 0:
-        smallestX = 350; 
-        biggestX = 450; 
-        x = Phaser.Math.Between(smallestX, biggestX); 
-        if (i === 0) floorX = x;
-        platform = new MovingPlatform(this, x, y, 'platform', smallestX, biggestX, {
-          isStatic: true,
-        });
-        platforms.add(platform);
-        middleColumn.push(platform);
-        break;
-      case 1:
-        const randomBool = Math.random() >= 0.5;
-        smallestX = randomBool ? 550 : 150;
-        biggestX = smallestX + 100; 
-        x = Phaser.Math.Between(smallestX, biggestX);
-        platform = new MovingPlatform(this, x, y, 'platform', smallestX, biggestX, {
-          isStatic: true
-        });
-        platforms.add(platform);
-        sideColumn.push(platform);
-        break;
-    }
+    const centerPlatform = i % 2 === 0;
+
+    const platform = new MovingPlatform(this, centerPlatform, y, 'platform', {
+      isStatic: true,
+    });
+
+    platforms.add(platform);
     platform.scaleX = 0.5;
     platform.setupFriction();
     platform.refreshBody();
+
+    if (i === 0) floorX = platform.x; // Starting platform x
   }
 
   // Adding Player
@@ -137,8 +115,8 @@ function update() {
   }
 
   if (player.y <= 300 && touchingDown) {
-    platforms.children.entries.forEach( platform => {
-      platform.moveVertically() 
+    platforms.children.entries.forEach(platform => {
+      platform.moveVertically();
     });
   }
 }
@@ -151,7 +129,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 450 }
+      gravity: { y: 450 },
     },
   },
   scene: {
