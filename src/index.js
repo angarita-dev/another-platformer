@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import MovingPlatform from './MovingPlatform';
 
 function preload() {
   this.load.baseURL = './src/assets/';
@@ -17,7 +18,6 @@ let middleColumn = [];
 let sideColumn = [];
 let player;
 let camera;
-let shouldMoveCamera;
 
 function create() {
   // Adding Background
@@ -25,39 +25,51 @@ function create() {
     .setScrollFactor(1, 0);
 
   // Adding Platforms
-  platforms = this.physics.add.staticGroup();
 
+  platforms = this.physics.add.group();
 
   let floorX;
   for (let i = 0; i < 6; i += 1){
     const columnSelector = i % 2;
     let x;
+    let smallestX;
+    let biggestX;
     let platform;
     const y = 600 - (146 * i); // Start generating platforms at bottom
     switch (columnSelector) {
       case 0:
-        x = Phaser.Math.Between(350, 450); 
+        smallestX = 350; 
+        biggestX = 450; 
+        x = Phaser.Math.Between(smallestX, biggestX); 
         if (i === 0) floorX = x;
-        platform = platforms.create(x, y, 'platform');
+        platform = new MovingPlatform(this, x, y, 'platform', smallestX, biggestX, {
+          isStatic: true,
+        });
+        platforms.add(platform);
         middleColumn.push(platform);
         break;
       case 1:
         const randomBool = Math.random() >= 0.5;
-        x = randomBool ? 
-          Phaser.Math.Between(550, 650) :
-          Phaser.Math.Between(150, 250);
-        platform = platforms.create(x, y, 'platform');
+        smallestX = randomBool ? 550 : 150;
+        biggestX = smallestX + 100; 
+        x = Phaser.Math.Between(smallestX, biggestX);
+        platform = new MovingPlatform(this, x, y, 'platform', smallestX, biggestX, {
+          isStatic: true
+        });
+        platforms.add(platform);
         sideColumn.push(platform);
         break;
     }
     platform.scaleX = 0.5;
+    platform.setupFriction();
     platform.refreshBody();
   }
 
   // Adding Player
-  player = this.physics.add.sprite(floorX, 350, 'dude');
+  player = this.physics.add.sprite(floorX, 500, 'dude');
   player.setBounce(0.06);
   player.setCollideWorldBounds(true);
+  player.setFrictionX(0);
   this.physics.world.checkCollision.up = false;
 
   // Player animation
@@ -124,34 +136,11 @@ function update() {
     player.body.velocity.y += 20;
   }
 
-
-  if (player.y <= 300) {
-    shouldMoveCamera = true;
+  if (player.y <= 300 && touchingDown) {
+    platforms.children.entries.forEach( platform => {
+      platform.moveVertically() 
+    });
   }
-
-  // Camera follow
-  if (shouldMoveCamera) {
-    camera.scrollY = player.y - 300;
-  }
-
-  // Plafrom scrolling logic
-  platforms.children.iterate( platform => {
-    const scrollY = this.cameras.main.scrollY;
-    if (platform.y > scrollY + 700) {
-      let x;
-      if (sideColumn.includes(platform)) { 
-        const randomBool = Math.random() >= 0.5;
-        x = randomBool ? 
-          Phaser.Math.Between(550, 650) :
-          Phaser.Math.Between(150, 250);
-      } else {
-        x = Phaser.Math.Between(350, 400);
-      }
-      platform.y = scrollY - 180 + Phaser.Math.Between(-20, 20);
-      platform.x = x;
-      platform.body.updateFromGameObject();
-    }
-  });
 }
 
 const config = {
@@ -162,8 +151,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 450 },
-      debug: false,
+      gravity: { y: 450 }
     },
   },
   scene: {
