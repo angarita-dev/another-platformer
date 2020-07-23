@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-class MovingPlatform extends Phaser.Physics.Arcade.Image {
+export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
   static setupX(centerPlatform) {
     let lowerXBound;
 
@@ -9,7 +9,7 @@ class MovingPlatform extends Phaser.Physics.Arcade.Image {
     } else {
       const randomBool = Math.random() >= 0.5;
 
-      lowerXBound = randomBool ? 150 : 450;
+      lowerXBound = randomBool ? 150 : 550;
     }
     const upperXBound = lowerXBound + 100;
 
@@ -56,11 +56,9 @@ class MovingPlatform extends Phaser.Physics.Arcade.Image {
   }
 
   respawnPlatform() {
-    this.startY = -125;
-    this.y = -125;
+    this.startY = -130;
+    this.y = -130;
     this.x = MovingPlatform.setupX(this.centerPlatform);
     this.runningTween.restart();
   }
 }
-
-export default MovingPlatform;
