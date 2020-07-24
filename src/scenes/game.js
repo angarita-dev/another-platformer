@@ -18,6 +18,25 @@ export default class MainGame extends Phaser.Scene {
       { frameWidth: 32, frameHeight: 48 });
   }
 
+  addItems() {
+    this.score = 0;
+    this.items = this.physics.add.group();
+
+    console.log(this.items);
+    // Add animation
+  }
+
+  addItem(x, y) {
+    const item = this.physics.add.sprite(x, y, 'star');
+    this.items.add(item);
+    item.setBounce(0.3);
+  }
+
+  collectItem(sprite, item) {
+    this.score += 1;
+    item.disableBody(true, true);
+  }
+
   addPlatforms() {
     this.platforms = this.physics.add.group();
 
@@ -25,9 +44,14 @@ export default class MainGame extends Phaser.Scene {
       const y = 600 - (146 * i); // Start generating platforms at bottom
       const centerPlatform = i % 2 === 0;
 
-      const platform = new MovingPlatform(this, centerPlatform, y, 'platform', {
-        isStatic: true,
-      });
+      const platform = new MovingPlatform(this,
+        centerPlatform,
+        y,
+        this.addItem.bind(this),
+        'platform',
+        {
+          isStatic: true,
+        });
 
       this.platforms.add(platform);
       platform.scaleX = 0.5;
@@ -71,15 +95,21 @@ export default class MainGame extends Phaser.Scene {
     this.add.image(400, 300, 'sky')
       .setScrollFactor(1, 0);
 
+    // Collectibles logic
+    this.addItems();
+
+
     // Adding Platforms
     this.addPlatforms()
   
     // Adding Player
     this.addPlayer();
-  
+
     // Adding sprites interaction
-    this.physics.add.collider(this.player, this.platforms);
     this.physics.world.checkCollision.up = false;
+    this.physics.add.collider(this.player, this.platforms);
+    this.physics.add.collider(this.items, this.platforms);
+    this.physics.add.overlap(this.player, this.items, this.collectItem, null, this);
 
     // Setting up Camera
     this.camera = this.cameras.main;
@@ -87,7 +117,10 @@ export default class MainGame extends Phaser.Scene {
 
   handleScrollDeath() {
     this.scene.pause();
-    this.scene.start('death', { endingX: this.player.x });
+    this.scene.start('death',
+      { endingX: this.player.x,
+        score: this.score,
+      });
   }
 
   checkScrollDeath() {

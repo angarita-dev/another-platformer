@@ -16,7 +16,26 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     return Phaser.Math.Between(lowerXBound, upperXBound);
   }
 
-  constructor(scene, centerPlatform, y, texture, options) {
+  static shouldAddItem(probability) {
+    return Math.random() >= 1.0 - probability;
+  }
+
+  addItemStartingParameters() {
+    return {
+      x: this.x + Phaser.Math.Between(-60, 60), 
+      y: this.startY - 120,
+    }
+  }
+
+  handleItemAdd(probability) {
+    if (MovingPlatform.shouldAddItem(probability)) {
+      const itemInfo = this.addItemStartingParameters();
+
+      this.addItem(itemInfo.x, itemInfo.y);
+    }
+  }
+
+  constructor(scene, centerPlatform, y, addItem, texture, options) {
     const x = MovingPlatform.setupX(centerPlatform);
 
     super(scene, x, y, texture, 0, options);
@@ -24,7 +43,12 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     this.centerPlatform = centerPlatform;
     this.startY = y;
     this.isMovingVertically = false;
+    this.addItem = addItem;
 
+    this.START_ITEM_PROBABILIY = 0.3;
+    this.RESPAWN_ITEM_PROBABILIY = 0.4;
+
+    this.handleItemAdd(this.START_ITEM_PROBABILIY);
     scene.add.existing(this);
   }
 
@@ -57,10 +81,11 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
   }
 
   respawnPlatform() {
-    const dy = Phaser.Math.Between(0, 5);
-    this.startY = -130 + dy;
-    this.y = -130 + dy;
+    this.startY = -125;
+    this.y = -125;
     this.x = MovingPlatform.setupX(this.centerPlatform);
     this.runningTween.restart();
+
+    this.handleItemAdd(this.RESPAWN_ITEM_PROBABILIY);
   }
 }
