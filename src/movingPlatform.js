@@ -9,7 +9,7 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     } else {
       const randomBool = Math.random() >= 0.5;
 
-      lowerXBound = randomBool ? 150 : 550;
+      lowerXBound = randomBool ? 120 : 570;
     }
     const upperXBound = lowerXBound + 100;
 
@@ -31,6 +31,7 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
   setupFriction() {
     this.body.immovable = true;
     this.body.allowGravity = false;
+    this.body.friction.x = 0;
     this.body.friction.y = 1;
     this.body.bounce.y = 0;
   }
@@ -56,8 +57,9 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
   }
 
   respawnPlatform() {
-    this.startY = -130;
-    this.y = -130;
+    const dy = Phaser.Math.Between(0, 5);
+    this.startY = -130 + dy;
+    this.y = -130 + dy;
     this.x = MovingPlatform.setupX(this.centerPlatform);
     this.runningTween.restart();
   }
