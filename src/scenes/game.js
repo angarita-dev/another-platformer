@@ -22,7 +22,12 @@ export default class MainGame extends Phaser.Scene {
     this.score = 0;
     this.items = this.physics.add.group();
 
-    console.log(this.items);
+    // 15 585
+    const img = this.add.image(20, 20, 'star');
+    img.setScale(0.95, 0.95);
+
+    // 30 578
+    this.scoreText = this.add.text(40, 12, this.score, { fill: '#000', fontSize: '18px' });
     // Add animation
   }
 
@@ -35,6 +40,7 @@ export default class MainGame extends Phaser.Scene {
   collectItem(sprite, item) {
     this.score += 1;
     item.disableBody(true, true);
+    this.scoreText.text = this.score;
   }
 
   addPlatforms() {
