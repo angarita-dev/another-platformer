@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import MovingPlatform from '../MovingPlatform';
+import MovingPlatform from '../movingPlatform';
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
