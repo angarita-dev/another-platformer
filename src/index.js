@@ -1,6 +1,9 @@
 import Phaser from 'phaser';
-import GameScene from './scenes/game'
-import DeathScene from './scenes/death'
+
+// Scenes
+
+import GameScene from './scenes/game';
+import DeathScene from './scenes/death';
 
 const config = {
   type: Phaser.AUTO,

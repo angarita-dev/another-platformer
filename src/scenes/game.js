@@ -1,4 +1,12 @@
 import Phaser from 'phaser';
+
+// Assets
+import dudeAsset from '../assets/dude.png';
+import platformAsset from '../assets/platform.png';
+import skyAsset from '../assets/sky.png';
+import starAsset from '../assets/star.png';
+
+// Auxiliary classes
 import MovingPlatform from '../movingPlatform';
 
 export default class MainGame extends Phaser.Scene {
@@ -7,14 +15,11 @@ export default class MainGame extends Phaser.Scene {
   }
 
   preload() {
-    this.load.baseURL = './src/assets/';
-    this.load.image('logo', 'logo.png');
-    this.load.image('sky', 'sky.png');
-    this.load.image('platform', 'platform.png');
-    this.load.image('star', 'star.png');
-    this.load.image('bomb', 'bomb.png');
+    this.load.image('sky', skyAsset);
+    this.load.image('platform', platformAsset);
+    this.load.image('star', starAsset);
     this.load.spritesheet('dude',
-      'dude.png',
+      dudeAsset,
       { frameWidth: 32, frameHeight: 48 });
   }
 
