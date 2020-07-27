@@ -46,7 +46,7 @@ export default class MainGame extends Phaser.Scene {
     this.score += 1;
     item.disableBody(true, true);
     this.scoreText.text = this.score;
-    this.platforms.increaseDifficulty(0.10);
+    this.platforms.increaseDifficulty(0.07);
   }
 
   addPlatforms() {
