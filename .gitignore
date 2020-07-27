@@ -15,3 +15,7 @@ dist/
 
 # Swap files
 *.swp
+
+# Dev build stylesheets
+stylesheet.css
+stylesheet.css.map
