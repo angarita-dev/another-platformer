@@ -39,7 +39,7 @@ module.exports = {
       WEBGL_RENDERER: JSON.stringify(true),
     }),
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: path.resolve(__dirname, '../dev/index.html'),
     }),
   ],
 };

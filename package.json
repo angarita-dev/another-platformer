@@ -4,8 +4,8 @@
   "description": "Simple open source platformer game",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack --config webpack/prod.js ",
-    "start": "webpack-dev-server --config webpack/base.js --open"
+    "build": "webpack --config webpack/prod.js && sass ./src/style/main.scss:dist/stylesheet.css --style compressed",
+    "start": "sass ./src/style/main.scss:./stylesheet.css && webpack-dev-server --config webpack/base.js --open"
   },
   "repository": {
     "type": "git",
@@ -28,8 +28,10 @@
   },
   "dependencies": {
     "clean-webpack-plugin": "^3.0.0",
+    "dev": "^0.1.3",
     "html-webpack-plugin": "^3.2.0",
     "phaser": "^3.20.1",
+    "sass": "^1.26.10",
     "terser-webpack-plugin": "^2.2.1",
     "webpack": "^4.41.2",
     "webpack-merge": "^4.2.2"
