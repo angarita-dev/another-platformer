@@ -7,7 +7,7 @@ import skyAsset from '../assets/sky.png';
 import starAsset from '../assets/star.png';
 
 // Auxiliary classes
-import MovingPlatform from '../movingPlatform';
+import PlatformManager from '../classes/platformManager';
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
@@ -46,17 +46,17 @@ export default class MainGame extends Phaser.Scene {
     this.score += 1;
     item.disableBody(true, true);
     this.scoreText.text = this.score;
-    this.platforms.children.entries.forEach( platform => platform.increaseDifficulty(0.10) );
+    this.platforms.increaseDifficulty(0.10);
   }
 
   addPlatforms() {
-    this.platforms = this.physics.add.group();
+    this.platforms = new PlatformManager(this.physics.world, this.scene);
 
     for (let i = 0; i < 6; i += 1) {
       const y = 600 - (146 * i); // Start generating platforms at bottom
       const centerPlatform = i % 2 === 0;
 
-      const platform = new MovingPlatform(this,
+      const platform = this.platforms.newPlatform(this,
         centerPlatform,
         y,
         this.addItem.bind(this),
@@ -65,7 +65,6 @@ export default class MainGame extends Phaser.Scene {
           isStatic: true,
         });
 
-      this.platforms.add(platform);
       platform.scaleX = 0.5;
       platform.setupFriction();
       platform.refreshBody();
@@ -179,9 +178,7 @@ export default class MainGame extends Phaser.Scene {
 
   movePlatforms() {
     if (this.player.y <= 300 && this.player.body.touching.down) {
-      this.platforms.children.entries.forEach(platform => {
-        platform.moveVertically();
-      });
+      this.platforms.moveVertically();
     }
   }
 
