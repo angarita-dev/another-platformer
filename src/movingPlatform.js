@@ -46,7 +46,7 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     this.addItem = addItem;
 
     this.START_ITEM_PROBABILIY = 0.3;
-    this.RESPAWN_ITEM_PROBABILIY = 0.4;
+    this.RESPAWN_ITEM_PROBABILIY = 0.9;
 
     this.handleItemAdd(this.START_ITEM_PROBABILIY);
     scene.add.existing(this);
@@ -67,7 +67,7 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     this.runningTween = this.scene.tweens.addCounter({
       from: 0,
       to: 1000,
-      duration: 14000,
+      duration: 13000,
       onUpdate: (tween, target) => {
         const { scrollY } = this.scene.cameras.main;
         const y = this.startY + target.value + scrollY;
@@ -78,6 +78,13 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
         if (this.y >= 650) this.respawnPlatform();
       },
     });
+  }
+
+  increaseDifficulty(step) {
+    if (!this.runningTween) return
+
+    const newTimeScale = this.runningTween.timeScale + step;
+    this.runningTween.setTimeScale(newTimeScale);
   }
 
   respawnPlatform() {

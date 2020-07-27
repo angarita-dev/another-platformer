@@ -46,6 +46,7 @@ export default class MainGame extends Phaser.Scene {
     this.score += 1;
     item.disableBody(true, true);
     this.scoreText.text = this.score;
+    this.platforms.children.entries.forEach( platform => platform.increaseDifficulty(0.10) );
   }
 
   addPlatforms() {
@@ -153,14 +154,14 @@ export default class MainGame extends Phaser.Scene {
       this.player.anims.play('right', true);
       if (this.player.body.touching.down) {
         this.player.setVelocityX(160);
-      } else {
+      } else if(this.player.body.velocity.x < 85) {
         this.player.setVelocityX(85);
       }
     } else if (this.movingLeft) {
       this.player.anims.play('left', true);
       if (this.player.body.touching.down) {
         this.player.setVelocityX(-160);
-      } else {
+      } else if(this.player.body.velocity.x > -85) {
         this.player.setVelocityX(-85);
       }
     } else {
