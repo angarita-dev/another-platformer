@@ -46,7 +46,7 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     this.addItem = addItem;
 
     this.START_ITEM_PROBABILIY = 0.3;
-    this.RESPAWN_ITEM_PROBABILIY = 0.9;
+    this.RESPAWN_ITEM_PROBABILIY = 0.6;
 
     this.handleItemAdd(this.START_ITEM_PROBABILIY);
     scene.add.existing(this);
