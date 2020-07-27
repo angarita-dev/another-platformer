@@ -77,7 +77,7 @@ export default class MainGame extends Phaser.Scene {
     this.player = this.physics.add.sprite(this.startX, 500, 'dude');
     this.player.setBounce(0.06);
     this.player.setCollideWorldBounds(true);
-    this.player.setFrictionX(0);
+    this.player.body.friction.x = 0;
 
     // Player animation
     this.anims.create({
@@ -148,25 +148,27 @@ export default class MainGame extends Phaser.Scene {
   }
 
   movePlayer() {
+    if (this.player.body.touching.down) this.player.jumpsAvailable = 1;
     if (this.movingRight) {
       this.player.anims.play('right', true);
       if (this.player.body.touching.down) {
         this.player.setVelocityX(160);
-      } else if (this.player.body.velocity.x <= 0) {
+      } else {
         this.player.setVelocityX(85);
       }
     } else if (this.movingLeft) {
       this.player.anims.play('left', true);
       if (this.player.body.touching.down) {
         this.player.setVelocityX(-160);
-      } else if (this.player.body.velocity.x >= 0) {
+      } else {
         this.player.setVelocityX(-85);
       }
     } else {
       this.player.anims.play('turn', true);
       this.player.setVelocityX(0);
     }
-    if (this.movingUp && this.player.body.touching.down) {
+    if (this.movingUp && this.player.jumpsAvailable > 0) {
+      this.player.jumpsAvailable -= 1;
       this.player.body.velocity.y -= 400;
     }
     if (this.movingDown) {
