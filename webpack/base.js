@@ -9,6 +9,30 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ttf$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            ouputPath: 'fonts/',
+            esModule: false,
+          },
+        },
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Adds `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Solves url loading issues with Sass
+          'resolve-url-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
