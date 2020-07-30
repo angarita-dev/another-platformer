@@ -109,10 +109,9 @@ export default class MainGame extends Phaser.Scene {
     // Collectibles logic
     this.addItems();
 
-
     // Adding Platforms
     this.addPlatforms()
-  
+
     // Adding Player
     this.addPlayer();
 
