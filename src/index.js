@@ -8,6 +8,7 @@ import './style/main.scss';
 import BackgroundScene from './scenes/background';
 import GameScene from './scenes/game';
 import DeathScene from './scenes/death';
+import TitleScene from './scenes/title';
 
 const config = {
   type: Phaser.AUTO,
@@ -25,6 +26,7 @@ const config = {
   },
   scene: [
     BackgroundScene,
+    TitleScene,
     GameScene, 
     DeathScene
   ],

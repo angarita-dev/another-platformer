@@ -37,6 +37,7 @@ export default class Background extends Phaser.Scene {
       .setOrigin(0);
     
     this.snapTo(-2700);
-    this.scrollTo(0);
+    const launchScene = () => { this.scene.launch('titleScene') };
+    this.scrollTo(0, launchScene);
   }
 }

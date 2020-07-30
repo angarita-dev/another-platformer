@@ -11,7 +11,7 @@ import PlatformManager from '../classes/platformManager';
 
 export default class MainGame extends Phaser.Scene {
   constructor() {
-    super("game");
+    super('game');
   }
 
   preload() {
