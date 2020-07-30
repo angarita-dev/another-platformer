@@ -1,12 +1,17 @@
 import Phaser from 'phaser';
 
+// Sass loading
+import './style/main.scss';
+
 // Scenes
 
+import BackgroundScene from './scenes/background';
 import GameScene from './scenes/game';
 import DeathScene from './scenes/death';
 
 const config = {
   type: Phaser.AUTO,
+  antialias: false,
   scale: {
     width: 800,
     height: 600,
@@ -19,6 +24,7 @@ const config = {
     },
   },
   scene: [
+    BackgroundScene,
     GameScene, 
     DeathScene
   ],

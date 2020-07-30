@@ -2,5 +2,12 @@ html, body {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  background-color: #000;
+  font-family: "Alagard";
+}
+
+@font-face {
+  font-family: "Alagard";
+  src: url("../assets/Fonts/alagard.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
