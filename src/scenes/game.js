@@ -15,7 +15,6 @@ export default class MainGame extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('sky', skyAsset);
     this.load.image('platform', platformAsset);
     this.load.image('star', starAsset);
     this.load.spritesheet('dude',
