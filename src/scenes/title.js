@@ -4,9 +4,7 @@ import Phaser from 'phaser';
 import titleAsset from '../assets/general/Title.png';
 
 export default class Title extends Phaser.Scene {
-  init(data) {
-    this.backgroundScene = data.backgroundScene;
-  }
+
   constructor() {
     super('titleScene');
   }
@@ -18,7 +16,6 @@ export default class Title extends Phaser.Scene {
 
   addTitle() {
     this.title = this.add.sprite(400, 200, 'title').setScale(4.5);
-    this.fade(this.title, 0, 1);
 
     // Title animation
     this.anims.create({
@@ -43,6 +40,27 @@ export default class Title extends Phaser.Scene {
     });
   }
 
+  centerHorizontally(text) {
+    text.x = (this.game.config.width / 2) - (text.width / 2);
+  }
+
+  fadeInElements() {
+    this.fade(this.playTitle, 0, 1);
+    this.fade(this.playCredits, 0, 1);
+    this.fade(this.title, 0, 1);
+  }
+
+  fadeOutElements() {
+    this.fade(this.playTitle, 1, 0);
+    this.fade(this.playCredits, 1, 0);
+    this.fade(this.title, 1, 0);
+  }
+
+  startGame() {
+    this.scene.launch('game');
+    this.scene.remove(this);
+  }
+
   addPlayTitle() {
     const stylingOptions = { 
       fontFamily: 'Alagard',
@@ -51,8 +69,8 @@ export default class Title extends Phaser.Scene {
     };
 
     const click = () => {
-      this.scene.launch('game');
-      this.scene.remove(this);
+      this.fadeOutElements();
+      this.backgroundScene.scrollTo(0, 2000, this.startGame.bind(this));
     }
 
     const enterHover = () => {
@@ -63,8 +81,8 @@ export default class Title extends Phaser.Scene {
       this.playTitle.setStyle({ color: '#333' });
     }
 
-    this.playTitle = this.add.text(370, 400, `Play`, stylingOptions);
-    this.fade(this.playTitle, 0, 1);
+    this.playTitle = this.add.text(0, 400, `Play`, stylingOptions);
+    this.centerHorizontally(this.playTitle);
 
     this.playTitle.setInteractive({ cursor: 'pointer' })
       .on('pointerdown', () => { click() })
@@ -87,8 +105,8 @@ export default class Title extends Phaser.Scene {
       this.playCredits.setStyle({ color: '#333' });
     }
 
-    this.playCredits = this.add.text(365, 432, `Credits`, stylingOptions);
-    this.fade(this.playCredits, 0, 1);
+    this.playCredits = this.add.text(0, 432, `Credits`, stylingOptions);
+    this.centerHorizontally(this.playCredits);
 
     this.playCredits.setInteractive({ cursor: 'pointer' })
       .on('pointerover', () => { enterHover() })
@@ -105,13 +123,12 @@ export default class Title extends Phaser.Scene {
     });
   }
 
-  fadeIn(element) {
-    element.alpha = 0;
-  }
-
   create() {
+    this.backgroundScene = this.scene.get('background');
+
     this.addTitle();
     this.addPlayTitle();
     this.addCreditsTitle();
+    this.fadeInElements();
   }
 }

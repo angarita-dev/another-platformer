@@ -54,7 +54,7 @@ export default class Background extends Phaser.Scene {
   spawnClouds() {
     const MIN_X = 0;
     const MAX_X = 1000;
-    const MIN_Y = -100;
+    const MIN_Y = -400;
     const MAX_Y = 250;
     const MIN_SCALE = 1;
     const MAX_SCALE = 3;
@@ -117,8 +117,11 @@ export default class Background extends Phaser.Scene {
   }
 
   handleDeath() {
-    this.runningTween.stop();
-    this.scrollTo(0, 3000);
+    if(this.runningTween) {
+      this.runningTween.stop();
+      this.scrollTo(0, 3000);
+    }
+
     this.cameras.main.fadeOut(3500);
   }
 
@@ -144,6 +147,10 @@ export default class Background extends Phaser.Scene {
     moveCloudGroup(this.backClouds, 0.035);
   }
 
+  startGame() {
+    this.scrollTo(0, 2000);
+  }
+
   scrollCameraTo(scrollPosition) {
     this.cameras.main.scrollY = scrollPosition;
   }
@@ -160,7 +167,7 @@ export default class Background extends Phaser.Scene {
 
     const launchTitleScene = () => this.scene.launch('titleScene');
 
-    this.scrollTo(0, 2000, launchTitleScene);
+    this.scrollTo(-300, 2000, launchTitleScene);
   }
 
   update() {
