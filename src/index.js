@@ -5,6 +5,7 @@ import './style/main.scss';
 
 // Scenes
 
+import SelectionScene from './scenes/characterSelection';
 import BackgroundScene from './scenes/background';
 import GameScene from './scenes/game';
 import DeathScene from './scenes/death';
@@ -27,6 +28,7 @@ const config = {
   scene: [
     BackgroundScene,
     TitleScene,
+    SelectionScene,
     GameScene, 
     DeathScene
   ],

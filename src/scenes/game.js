@@ -122,14 +122,17 @@ export default class MainGame extends Phaser.Scene {
 
     // Setting up backgroundScene
     this.backgroundScene = this.scene.get('background');
+
+    // Setting up movement
+    this.isMoving = false;
   }
 
   handleScrollDeath() {
-    this.scene.pause();
     this.scene.start('death',
       { endingX: this.player.x,
         score: this.score,
       });
+    this.scene.stop();
   }
 
   checkScrollDeath() {

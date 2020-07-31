@@ -4,7 +4,6 @@ import Phaser from 'phaser';
 import titleAsset from '../assets/general/Title.png';
 
 export default class Title extends Phaser.Scene {
-
   constructor() {
     super('titleScene');
   }
@@ -57,7 +56,7 @@ export default class Title extends Phaser.Scene {
   }
 
   startGame() {
-    this.scene.launch('game');
+    this.scene.launch('characterSelection');
     this.scene.remove(this);
   }
 
@@ -70,7 +69,7 @@ export default class Title extends Phaser.Scene {
 
     const click = () => {
       this.fadeOutElements();
-      this.backgroundScene.scrollTo(0, 2000, this.startGame.bind(this));
+      this.startGame();
     }
 
     const enterHover = () => {
