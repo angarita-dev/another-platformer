@@ -11,7 +11,7 @@ import DeathScene from './scenes/death';
 import TitleScene from './scenes/title';
 
 const config = {
-  type: Phaser.AUTO,
+  type: Phaser.CANVAS,
   antialias: false,
   scale: {
     width: 800,

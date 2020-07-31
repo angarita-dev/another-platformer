@@ -16,6 +16,8 @@ import cloudAsset07 from '../assets/Background/Clouds/cloud_07.png';
 export default class Background extends Phaser.Scene {
   constructor() {
     super('background');
+
+    this.fakeScroll = 0;
   }
 
   preload() {
@@ -31,12 +33,12 @@ export default class Background extends Phaser.Scene {
     this.load.image('cloud07', cloudAsset07);
   }
 
-  scrollTo(targetPosition, onEnd = () => {}) {
+  scrollTo(targetPosition, duration, onEnd = () => {}) {
     const currentCameraPosition = this.cameras.main.scrollY;
     this.tweens.addCounter({
       from: currentCameraPosition,
       to: targetPosition,
-      duration: 2000,
+      duration: duration,
       ease: 'Power1',
       onUpdate: (tween, target) => {
         this.cameras.main.scrollY = target.value;
@@ -103,6 +105,30 @@ export default class Background extends Phaser.Scene {
     this.mountainsFront.tilePositionX += 0.15;
   }
 
+  startBackgroundMove() {
+    this.runningTween = this.tweens.addCounter({
+      from: 0,
+      to: -2700,
+      duration: 200000,
+      onUpdate: (tween, target) => {
+        this.cameras.main.scrollY = target.value;
+      }
+    });
+  }
+
+  handleDeath() {
+    this.runningTween.stop();
+    this.scrollTo(0, 3000);
+    this.cameras.main.fadeOut(3500);
+  }
+
+  increaseDifficulty(step) {
+    if (!this.runningTween) return
+
+    const newTimeScale = this.runningTween.timeScale + step;
+    this.runningTween.setTimeScale(newTimeScale);
+  }
+
   moveClouds() {
     const getChildren = (group) => group.children.entries;
 
@@ -118,6 +144,10 @@ export default class Background extends Phaser.Scene {
     moveCloudGroup(this.backClouds, 0.035);
   }
 
+  scrollCameraTo(scrollPosition) {
+    this.cameras.main.scrollY = scrollPosition;
+  }
+
   create() {
     this.add.image(0, -2700, 'sky')
       .setScale(1.5)
@@ -128,8 +158,9 @@ export default class Background extends Phaser.Scene {
     
     this.snapTo(-2700);
 
-    const launchTitleScene = () => { this.scene.launch('titleScene') };
-    this.scrollTo(0, launchTitleScene);
+    const launchTitleScene = () => this.scene.launch('titleScene');
+
+    this.scrollTo(0, 2000, launchTitleScene);
   }
 
   update() {

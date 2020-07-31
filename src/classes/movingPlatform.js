@@ -42,7 +42,6 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
 
     this.centerPlatform = centerPlatform;
     this.startY = y;
-    this.isMovingVertically = false;
     this.addItem = addItem;
 
     this.START_ITEM_PROBABILIY = 0.3;
@@ -61,16 +60,12 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
   }
 
   moveVertically() {
-    if (this.isMovingVertically) return;
-
-    this.isMovingVertically = true;
     this.runningTween = this.scene.tweens.addCounter({
       from: 0,
       to: 1000,
       duration: 13000,
       onUpdate: (tween, target) => {
-        const { scrollY } = this.scene.cameras.main;
-        const y = this.startY + target.value + scrollY;
+        const y = this.startY + target.value;
         const dy = y - this.y;
         this.body.velocity.y = dy;
         this.refreshBody();

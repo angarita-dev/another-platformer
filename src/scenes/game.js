@@ -3,13 +3,13 @@ import Phaser from 'phaser';
 // Assets
 import dudeAsset from '../assets/dude.png';
 import platformAsset from '../assets/platform.png';
-import skyAsset from '../assets/sky.png';
 import starAsset from '../assets/star.png';
 
 // Auxiliary classes
 import PlatformManager from '../classes/platformManager';
 
 export default class MainGame extends Phaser.Scene {
+
   constructor() {
     super('game');
   }
@@ -46,6 +46,7 @@ export default class MainGame extends Phaser.Scene {
     item.disableBody(true, true);
     this.scoreText.text = this.score;
     this.platforms.increaseDifficulty(0.04);
+    this.backgroundScene.increaseDifficulty(0.04);
   }
 
   addPlatforms() {
@@ -101,10 +102,6 @@ export default class MainGame extends Phaser.Scene {
   }
 
   create() {
-    // Adding Background
-    this.add.image(400, 300, 'sky')
-      .setScrollFactor(1, 0);
-
     // Collectibles logic
     this.addItems();
 
@@ -122,6 +119,9 @@ export default class MainGame extends Phaser.Scene {
 
     // Setting up Camera
     this.camera = this.cameras.main;
+
+    // Setting up backgroundScene
+    this.backgroundScene = this.scene.get('background');
   }
 
   handleScrollDeath() {
@@ -175,8 +175,10 @@ export default class MainGame extends Phaser.Scene {
   }
 
   movePlatforms() {
-    if (this.player.y <= 300 && this.player.body.touching.down) {
+    if (this.player.y <= 300 && this.player.body.touching.down && !this.isMoving) {
+      this.isMoving = true;
       this.platforms.moveVertically();
+      this.backgroundScene.startBackgroundMove();
     }
   }
 
