@@ -55,7 +55,7 @@ export default class Title extends Phaser.Scene {
       this.playTitle.setStyle({ color: '#333' });
     }
 
-    this.playTitle = this.add.text(370, 470, `Play`, stylingOptions);
+    this.playTitle = this.add.text(370, 400, `Play`, stylingOptions);
     this.fadeIn(this.playTitle);
 
     this.playTitle.setInteractive({ cursor: 'pointer' })
@@ -78,7 +78,7 @@ export default class Title extends Phaser.Scene {
       this.playCredits.setStyle({ color: '#333' });
     }
 
-    this.playCredits = this.add.text(365, 502, `Credits`, stylingOptions);
+    this.playCredits = this.add.text(365, 432, `Credits`, stylingOptions);
     this.fadeIn(this.playCredits);
 
     this.playCredits.setInteractive({ cursor: 'pointer' })

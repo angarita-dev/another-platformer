@@ -2,6 +2,9 @@ import Phaser from 'phaser';
 
 // Importing assets
 import skyAsset from '../assets/Background/Sky/sky.jpeg';
+import mountainAsset01 from '../assets/Background/Back/front.png';
+import mountainAsset02 from '../assets/Background/Back/front02.png';
+
 import cloudAsset01 from '../assets/Background/Clouds/cloud_01.png';
 import cloudAsset02 from '../assets/Background/Clouds/cloud_02.png';
 import cloudAsset03 from '../assets/Background/Clouds/cloud_03.png';
@@ -17,6 +20,8 @@ export default class Background extends Phaser.Scene {
 
   preload() {
     this.load.image('sky', skyAsset);  
+    this.load.image('mountain01', mountainAsset01);
+    this.load.image('mountain02', mountainAsset02);
     this.load.image('cloud01', cloudAsset01);
     this.load.image('cloud02', cloudAsset02);
     this.load.image('cloud03', cloudAsset03);
@@ -83,6 +88,21 @@ export default class Background extends Phaser.Scene {
     }
   }
 
+  addMountains() {
+    this.mountainsBack = this.add.tileSprite(0, 400, 800, 200, 'mountain01')
+      .setScale(3, 1)
+      .setOrigin(0);
+
+    this.mountainsFront = this.add.tileSprite(0, 500, 800, 100, 'mountain02')
+      .setScale(2, 1)
+      .setOrigin(0);
+  }
+
+  moveMountains() {
+    this.mountainsBack.tilePositionX += 0.02;
+    this.mountainsFront.tilePositionX += 0.15;
+  }
+
   moveClouds() {
     const getChildren = (group) => group.children.entries;
 
@@ -103,6 +123,7 @@ export default class Background extends Phaser.Scene {
       .setScale(1.5)
       .setOrigin(0);
 
+    this.addMountains();
     this.spawnClouds();
     
     this.snapTo(-2700);
@@ -113,5 +134,6 @@ export default class Background extends Phaser.Scene {
 
   update() {
     this.moveClouds();
+    this.moveMountains();
   }
 }
