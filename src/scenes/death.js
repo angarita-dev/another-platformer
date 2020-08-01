@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
+import Scene from '../classes/sceneUtils';
 
-export default class DeathScene extends Phaser.Scene {
+export default class DeathScene extends Scene {
   init(data) {
     this.endingX = data.endingX;
     this.score = data.score;
@@ -62,10 +63,6 @@ export default class DeathScene extends Phaser.Scene {
     this.backgroundScene.handleDeath();
 
     this.addReplay();
-  }
-
-  centerTextHorizontally(text) {
-    text.x = (this.game.config.width / 2) - (text.width / 2);
   }
 
   create() {

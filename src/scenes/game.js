@@ -9,7 +9,6 @@ import starAsset from '../assets/star.png';
 import PlatformManager from '../classes/platformManager';
 
 export default class MainGame extends Phaser.Scene {
-
   constructor() {
     super('game');
   }

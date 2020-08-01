@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
+import Scene from '../classes/sceneUtils';
 
 // Importing Assets
 import titleAsset from '../assets/general/Title.png';
 
-export default class Title extends Phaser.Scene {
+export default class Title extends Scene {
   constructor() {
     super('titleScene');
   }
@@ -37,10 +38,6 @@ export default class Title extends Phaser.Scene {
         this.title.anims.nextAnim = 'still';
       }
     });
-  }
-
-  centerHorizontally(text) {
-    text.x = (this.game.config.width / 2) - (text.width / 2);
   }
 
   fadeInElements() {
@@ -81,7 +78,7 @@ export default class Title extends Phaser.Scene {
     }
 
     this.playTitle = this.add.text(0, 400, `Play`, stylingOptions);
-    this.centerHorizontally(this.playTitle);
+    this.centerTextHorizontally(this.playTitle);
 
     this.playTitle.setInteractive({ cursor: 'pointer' })
       .on('pointerdown', () => { click() })
@@ -105,21 +102,11 @@ export default class Title extends Phaser.Scene {
     }
 
     this.playCredits = this.add.text(0, 432, `Credits`, stylingOptions);
-    this.centerHorizontally(this.playCredits);
+    this.centerTextHorizontally(this.playCredits);
 
     this.playCredits.setInteractive({ cursor: 'pointer' })
       .on('pointerover', () => { enterHover() })
       .on('pointerout', () => { exitHover() });
-  }
-
-  fade(element, from, to, onEnd = () => {}) {
-    element.alpha = from,
-     this.tweens.add({
-      targets: element,
-      alpha: to,
-      duration: 1500,
-      onComplete: () => { onEnd() }
-    });
   }
 
   create() {
