@@ -120,7 +120,7 @@ export default class Background extends Phaser.Scene {
       this.scrollTo(0, 3000);
     }
 
-    this.cameras.main.fadeOut();
+    this.cameras.main.fadeOut(2000);
   }
 
   increaseDifficulty(step) {

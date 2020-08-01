@@ -54,7 +54,7 @@ export default class DeathScene extends Scene {
 
   fadeFallingCharacter() {
     const removeCharacter = () => { this.falling.destroy() };
-    this.fade(this.falling, 1, 0, 1500, removeCharacter);
+    this.fade(this.falling, 1, 0, 2000, removeCharacter);
   }
 
   addMessage() {
