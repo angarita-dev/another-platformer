@@ -25,13 +25,13 @@ export default class CharacterSelection extends Scene {
   }
 
   fadeInElements() {
-    this.fade(this.selectText, 0, 1, 100);
-    this.fade(this.cowboyImage, 0, 1, 100);
+    this.fade(this.selectText, 0, 1, 700);
+    this.fade(this.cowboyImage, 0, 1, 700);
   }
 
   fadeOutElements(onEnd = () => {}) {
-    this.fade(this.cowboyImage, 1, 0, 1500, onEnd);
-    this.fade(this.selectText, 1, 0);
+    this.fade(this.cowboyImage, 1, 0, 700, onEnd);
+    this.fade(this.selectText, 1, 0, 700);
   }
 
   startGame() {

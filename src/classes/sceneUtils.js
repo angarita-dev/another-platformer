@@ -22,7 +22,7 @@ export default class Scene extends Phaser.Scene {
      this.tweens.add({
       targets: element,
       alpha: to,
-      duration: 1500,
+      duration,
       onComplete: () => { onEnd() }
     });
   }
