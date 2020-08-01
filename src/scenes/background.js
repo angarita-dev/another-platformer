@@ -92,11 +92,9 @@ export default class Background extends Phaser.Scene {
 
   addMountains() {
     this.mountainsBack = this.add.tileSprite(0, 400, 800, 200, 'mountain01')
-      .setScale(3, 1)
       .setOrigin(0);
 
     this.mountainsFront = this.add.tileSprite(0, 500, 800, 100, 'mountain02')
-      .setScale(2, 1)
       .setOrigin(0);
   }
 
