@@ -1,6 +1,9 @@
 import Phaser from 'phaser';
 import Scene from '../classes/sceneUtils';
 
+// Importing Assets
+import fallingAsset from '../assets/Characters/Cowboy/falling.png';
+
 export default class DeathScene extends Scene {
   init(data) {
     this.endingX = data.endingX;
@@ -12,6 +15,46 @@ export default class DeathScene extends Scene {
   }
 
   preload() {
+    this.load.spritesheet('falling', fallingAsset,
+      { frameWidth: 32, frameHeight: 32 }); 
+  }
+
+  addFallingCharacter() {
+    this.falling = this.add.sprite(this.endingX, 560, 'falling').setScale(2);
+
+    // Animation
+    this.anims.create({
+      key: 'drop',
+      frames: this.anims.generateFrameNumbers('falling', { start: 0, end: 7 }),
+      frameRate: 10,
+    });
+
+    this.anims.create({
+      key: 'fall',
+      frames: this.anims.generateFrameNumbers('falling', { start: 8, end: 10 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.falling.anims.play('drop', true);
+    this.falling.anims.nextAnim = 'fall';
+
+    this.moveFallingCharacter();
+    this.fadeFallingCharacter();
+  }
+
+  moveFallingCharacter() {
+    this.tweens.addCounter({
+      from: this.falling.y, 
+      to: 0,
+      duration: 2500,
+      onUpdate: (tween, target) => { this.falling.y = target.value }
+    });
+  }
+
+  fadeFallingCharacter() {
+    const removeCharacter = () => { this.falling.destroy() };
+    this.fade(this.falling, 1, 0, 1500, removeCharacter);
   }
 
   addMessage() {
@@ -67,6 +110,8 @@ export default class DeathScene extends Scene {
 
   create() {
     this.backgroundScene = this.scene.get('background');
+
+    this.addFallingCharacter();
     this.addMessage();
     this.handleDeath();
   }
