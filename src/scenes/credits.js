@@ -63,6 +63,7 @@ export default class Credits extends Scene {
 
   returnToMainMenu() {
     const launchTitleScene = () => {
+      this.scene.stop();
       this.scene.launch('background');
     }
 
