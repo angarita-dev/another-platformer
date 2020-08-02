@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Scene from '../classes/sceneUtils';
 
 // Importing assets
 import skyAsset from '../assets/Background/Sky/sky.jpeg';
@@ -13,7 +14,7 @@ import cloudAsset05 from '../assets/Background/Clouds/cloud_05.png';
 import cloudAsset06 from '../assets/Background/Clouds/cloud_06.png';
 import cloudAsset07 from '../assets/Background/Clouds/cloud_07.png';
 
-export default class Background extends Phaser.Scene {
+export default class Background extends Scene {
   constructor() {
     super('background');
 
@@ -155,8 +156,10 @@ export default class Background extends Phaser.Scene {
     this.snapTo(-300);
   }
 
-  scrollCameraTo(scrollPosition) {
-    this.cameras.main.scrollY = scrollPosition;
+  launchTitle() {
+    const launchTitleScene = () => this.scene.launch('titleScene');
+
+    this.scrollTo(-300, 2000, launchTitleScene);
   }
 
   create() {
@@ -168,10 +171,7 @@ export default class Background extends Phaser.Scene {
     this.spawnClouds();
     
     this.snapTo(-2700);
-
-    const launchTitleScene = () => this.scene.launch('titleScene');
-
-    this.scrollTo(-300, 2000, launchTitleScene);
+    this.launchTitle();
   }
 
   update() {

@@ -10,6 +10,7 @@ import BackgroundScene from './scenes/background';
 import GameScene from './scenes/game';
 import DeathScene from './scenes/death';
 import TitleScene from './scenes/title';
+import CreditsScene from './scenes/credits';
 
 const config = {
   type: Phaser.CANVAS,
@@ -30,7 +31,8 @@ const config = {
     TitleScene,
     SelectionScene,
     GameScene, 
-    DeathScene
+    DeathScene,
+    CreditsScene
   ],
 };
 

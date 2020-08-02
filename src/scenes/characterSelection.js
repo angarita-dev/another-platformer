@@ -24,18 +24,8 @@ export default class CharacterSelection extends Scene {
     this.centerTextHorizontally(this.selectText);
   }
 
-  fadeInElements() {
-    this.fade(this.selectText, 0, 1, 700);
-    this.fade(this.cowboyImage, 0, 1, 700);
-  }
-
-  fadeOutElements(onEnd = () => {}) {
-    this.fade(this.cowboyImage, 1, 0, 700, onEnd);
-    this.fade(this.selectText, 1, 0, 700);
-  }
-
   startGame() {
-    this.fadeOutElements(() => {
+    this.fadeOutElements(700, () => {
       this.backgroundScene.scrollTo(0, 2000, () => {
         this.scene.launch('game');
         this.scene.stop();
@@ -60,6 +50,6 @@ export default class CharacterSelection extends Scene {
     this.addCowboySelection();
 
     // Adds fade transition
-    this.fadeInElements();
+    this.fadeInElements(700);
   }
 }

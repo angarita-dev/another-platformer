@@ -40,21 +40,27 @@ export default class Title extends Scene {
     });
   }
 
-  fadeInElements() {
-    this.fade(this.playTitle, 0, 1);
-    this.fade(this.playCredits, 0, 1);
-    this.fade(this.title, 0, 1);
-  }
-
-  fadeOutElements() {
-    this.fade(this.playTitle, 1, 0);
-    this.fade(this.playCredits, 1, 0);
-    this.fade(this.title, 1, 0);
-  }
-
   startGame() {
     this.scene.launch('characterSelection');
-    this.scene.remove(this);
+    this.scene.stop();
+  }
+
+  startCredits() {
+    const launchCredits = () => {
+      this.scene.launch('credits');
+    }
+
+    const stopScenes = () => {
+      this.backgroundScene.scene.stop();
+      this.scene.stop();
+    }
+
+    const closeBackground = () => {
+      this.backgroundScene.fadeOutElements(1500, stopScenes);
+    }
+
+    this.fadeOutElements(700, launchCredits);
+    this.backgroundScene.scrollTo(-2700, 2000, closeBackground);
   }
 
   addPlayTitle() {
@@ -65,6 +71,8 @@ export default class Title extends Scene {
     };
 
     const click = () => {
+      if (this.playTitle.alpha < 0.5) return;
+
       this.fadeOutElements();
       this.startGame();
     }
@@ -93,6 +101,11 @@ export default class Title extends Scene {
       color: '#333',
     };
 
+    const click = () => {
+      if (this.playCredits.alpha < 0.5) return;
+      this.startCredits();
+    }
+
     const enterHover = () => {
       this.playCredits.setStyle({ color: '#000' });
     }
@@ -105,6 +118,7 @@ export default class Title extends Scene {
     this.centerTextHorizontally(this.playCredits);
 
     this.playCredits.setInteractive({ cursor: 'pointer' })
+      .on('pointerdown', () => { click() })
       .on('pointerover', () => { enterHover() })
       .on('pointerout', () => { exitHover() });
   }
