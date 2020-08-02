@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 
 // Assets
-import dudeAsset from '../assets/dude.png';
+import dudeAsset from '../assets/Characters/Cowboy/character.png';
 import platformAsset from '../assets/platform.png';
-import starAsset from '../assets/star.png';
+import collectibleAsset from '../assets/Characters/Cowboy/collectible.png';
 
 // Auxiliary classes
 import PlatformManager from '../classes/platformManager';
@@ -15,35 +15,57 @@ export default class MainGame extends Phaser.Scene {
 
   preload() {
     this.load.image('platform', platformAsset);
-    this.load.image('star', starAsset);
-    this.load.spritesheet('dude',
-      dudeAsset,
-      { frameWidth: 32, frameHeight: 48 });
+    this.load.spritesheet('collectible', collectibleAsset,
+      { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('dude', dudeAsset,
+      { frameWidth: 32, frameHeight: 32 });
+  }
+
+  addItemCounter() {
+    const stylingOptions = { 
+      fontFamily: 'Alagard',
+      fontSize: '22px',
+      color: '#000',
+    };
+
+    this.scoreImg = this.add.sprite(20, 20, 'collectible').setScale(1.8);
+    this.scoreText = this.add.text(40, 12, this.score, stylingOptions);
+
+    this.children.bringToTop(this.scoreText);
+    this.children.bringToTop(this.scoreImg);
   }
 
   addItems() {
     this.score = 0;
     this.items = this.physics.add.group();
-
-    // 15 585
-    const img = this.add.image(20, 20, 'star');
-    img.setScale(0.95, 0.95);
-
-    // 30 578
-    this.scoreText = this.add.text(40, 12, this.score, { fill: '#000', fontSize: '18px' });
-    // Add animation
   }
 
   addItem(x, y) {
-    const item = this.physics.add.sprite(x, y, 'star');
-    this.items.add(item);
+    const item = this.physics.add.sprite(x, y, 'collectible').setScale(2);
+
+    this.anims.create({
+      key: 'collectibleTurn',
+      frames: this.anims.generateFrameNumbers('collectible', { start: 0, end: 25 }),
+      frameRate: 15,
+      repeat: -1
+    });
+
+    item.anims.play('collectibleTurn');
     item.setBounce(0.3);
+
+    this.items.add(item);
   }
 
   collectItem(sprite, item) {
-    this.score += 1;
+    // Destroys the item
     item.disableBody(true, true);
+    item.destroy();
+
+    // Increases counter 
+    this.score += 1;
     this.scoreText.text = this.score;
+
+    // Increases difficulty
     this.platforms.increaseDifficulty(0.04);
     this.backgroundScene.increaseDifficulty(0.04);
   }
@@ -73,7 +95,7 @@ export default class MainGame extends Phaser.Scene {
   }
 
   addPlayer() {
-    this.player = this.physics.add.sprite(this.startX, 500, 'dude');
+    this.player = this.physics.add.sprite(this.startX, 500, 'dude').setScale(2);
     this.player.setBounce(0.06);
     this.player.setCollideWorldBounds(true);
     this.player.body.friction.x = 0;
@@ -88,14 +110,14 @@ export default class MainGame extends Phaser.Scene {
     this.anims.create({
       key: 'right',
       frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-      frameRate: 10,
+      frameRate: 8,
       repeat: -1,
     });
 
     this.anims.create({
       key: 'left',
       frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-      frameRate: 10,
+      frameRate: 8,
       repeat: -1,
     });
   }
@@ -124,6 +146,9 @@ export default class MainGame extends Phaser.Scene {
 
     // Setting up movement
     this.isMoving = false;
+
+    // Adding Collectible Counter
+    this.addItemCounter();
   }
 
   handleScrollDeath() {
