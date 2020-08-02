@@ -209,7 +209,7 @@ export default class MainGame extends Phaser.Scene {
     }
     if (this.movingUp && this.player.jumpsAvailable > 0) {
       this.player.jumpsAvailable -= 1;
-      this.player.body.velocity.y -= 400;
+      this.player.setVelocityY(-400);
     }
     if (this.movingDown) {
       this.player.body.velocity.y += 20;
