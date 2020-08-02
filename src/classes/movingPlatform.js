@@ -48,7 +48,9 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     this.RESPAWN_ITEM_PROBABILIY = 0.6;
 
     this.handleItemAdd(this.START_ITEM_PROBABILIY);
-    scene.add.existing(this);
+    this.scene.add.existing(this);
+
+    this.scene.randomizePlatformTexture(this);
   }
 
   setupFriction() {
@@ -89,5 +91,6 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     this.runningTween.restart();
 
     this.handleItemAdd(this.RESPAWN_ITEM_PROBABILIY);
+    this.scene.randomizePlatformTexture(this);
   }
 }

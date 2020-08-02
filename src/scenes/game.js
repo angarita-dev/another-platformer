@@ -2,7 +2,10 @@ import Phaser from 'phaser';
 
 // Assets
 import dudeAsset from '../assets/Characters/Cowboy/character.png';
-import platformAsset from '../assets/platform.png';
+import platformAsset01 from '../assets/Characters/Cowboy/platform_01.png';
+import platformAsset02 from '../assets/Characters/Cowboy/platform_02.png';
+import platformAsset03 from '../assets/Characters/Cowboy/platform_03.png';
+import platformAsset04 from '../assets/Characters/Cowboy/platform_04.png';
 import collectibleAsset from '../assets/Characters/Cowboy/collectible.png';
 
 // Auxiliary classes
@@ -14,11 +17,24 @@ export default class MainGame extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('platform', platformAsset);
+    this.load.image('platform01', platformAsset01);
+    this.load.image('platform02', platformAsset02);
+    this.load.image('platform03', platformAsset03);
+    this.load.image('platform04', platformAsset04);
+
     this.load.spritesheet('collectible', collectibleAsset,
       { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('dude', dudeAsset,
       { frameWidth: 32, frameHeight: 32 });
+  }
+
+  randomizePlatformTexture(platformObject) {
+    const rareTexture = Math.random() > 0.9; 
+    const platformIndex = rareTexture ?
+      Phaser.Math.Between(1, 2) :
+      Phaser.Math.Between(3, 4);
+
+    platformObject.setTexture(`platform0${platformIndex}`);
   }
 
   addItemCounter() {
@@ -81,12 +97,11 @@ export default class MainGame extends Phaser.Scene {
         centerPlatform,
         y,
         this.addItem.bind(this),
-        'platform',
+        'platform03',
         {
           isStatic: true,
         });
 
-      platform.scaleX = 0.5;
       platform.setupFriction();
       platform.refreshBody();
 
