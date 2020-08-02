@@ -19,3 +19,6 @@ dist/
 # Dev build stylesheets
 stylesheet.css
 stylesheet.css.map
+
+# Removing .env
+.env

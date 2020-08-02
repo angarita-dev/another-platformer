@@ -5,6 +5,15 @@ html, body {
   font-family: "Alagard";
 }
 
+body {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  border-bottom: 1px solid #fff !important;
+}
+
 @font-face {
   font-family: "Alagard";
   src: url("../assets/Fonts/alagard.ttf") format("truetype");

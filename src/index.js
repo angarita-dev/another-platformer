@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
 
+// Plugins
+import InputTextPlugin from 'phaser3-rex-plugins/plugins/inputtext-plugin.js';
+
 // Sass loading
 import './style/main.scss';
 
@@ -11,6 +14,7 @@ import GameScene from './scenes/game';
 import DeathScene from './scenes/death';
 import TitleScene from './scenes/title';
 import CreditsScene from './scenes/credits';
+import ScoreboardScene from './scenes/scoreboard';
 
 const config = {
   type: Phaser.CANVAS,
@@ -32,8 +36,21 @@ const config = {
     SelectionScene,
     GameScene, 
     DeathScene,
-    CreditsScene
+    ScoreboardScene,
+    CreditsScene,
   ],
+  parent: divId,
+  dom: {
+    createContainer: true
+  },
+  plugins: {
+    global: [{
+      key: 'rexInputTextPlugin',
+      plugin: InputTextPlugin,
+      start: true
+    },
+    ]
+  }
 };
 
 const game = new Phaser.Game(config);
