@@ -56,11 +56,11 @@ export default class Title extends Scene {
     }
 
     const closeBackground = () => {
-      this.backgroundScene.fadeOutElements(1500, stopScenes);
+      this.backgroundScene.fadeOutElements(700, stopScenes);
     }
 
     this.fadeOutElements(700, launchCredits);
-    this.backgroundScene.scrollTo(-2700, 2000, closeBackground);
+    this.backgroundScene.scrollTo(-1800, 3500, closeBackground);
   }
 
   addPlayTitle() {

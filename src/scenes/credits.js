@@ -54,7 +54,7 @@ export default class Credits extends Scene {
     this.tweens.add({
       targets: this.creditsText.getChildren(),
       y: '-= 1400',
-      duration: 15000,
+      duration: 30000,
       onComplete: () => {
         this.returnToMainMenu();
       }
@@ -91,5 +91,4 @@ export default class Credits extends Scene {
 
     this.fadeInElements();
   }
-
 }

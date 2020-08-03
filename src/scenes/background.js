@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Scene from '../classes/sceneUtils';
 
 // Importing assets
-import skyAsset from '../assets/Background/Sky/sky.jpeg';
+import skyAsset from '../assets/Background/Sky/sky.png';
 import mountainAsset01 from '../assets/Background/Back/front.png';
 import mountainAsset02 from '../assets/Background/Back/front02.png';
 
@@ -163,14 +163,13 @@ export default class Background extends Scene {
   }
 
   create() {
-    this.add.image(0, -2700, 'sky')
-      .setScale(1.5)
+    this.add.image(0, -1800, 'sky')
       .setOrigin(0);
 
     this.addMountains();
     this.spawnClouds();
     
-    this.snapTo(-2700);
+    this.snapTo(-1800);
     this.launchTitle();
   }
 
