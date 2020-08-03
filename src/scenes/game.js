@@ -224,6 +224,10 @@ export default class MainGame extends Phaser.Scene {
     }
   }
 
+  changeCounterColor() {
+    this.scoreText.setColor('#fff');
+  }
+
   update() {
     // Check death condition
     this.checkScrollDeath();

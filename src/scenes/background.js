@@ -105,10 +105,11 @@ export default class Background extends Scene {
   }
 
   startBackgroundMove() {
+    this.movingBackground = true;
     this.runningTween = this.tweens.addCounter({
       from: 0,
-      to: -2700,
-      duration: 200000,
+      to: -1800,
+      duration: 150000,
       onUpdate: (tween, target) => {
         this.cameras.main.scrollY = target.value;
       }
@@ -171,10 +172,20 @@ export default class Background extends Scene {
     
     this.snapTo(-1800);
     this.launchTitle();
+   
+    this.camera = this.cameras.main;
+    this.gameScene = this.scene.get('game');
+    this.movingBackground = false;
+    this.changedCounterColor = false;
   }
 
   update() {
     this.moveClouds();
     this.moveMountains();
+
+    if (!this.changedCounterColor && this.movingBackground && this.camera.scrollY <= -650) {
+      this.gameScene.changeCounterColor();
+      this.changedCounterColor = true;
+    }
   }
 }
