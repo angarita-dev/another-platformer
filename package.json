@@ -16,6 +16,7 @@
   "licenseUrl": "https://codingangarita.mit-license.org/",
   "devDependencies": {
     "@babel/core": "^7.7.2",
+    "@babel/plugin-transform-runtime": "^7.11.0",
     "@babel/preset-env": "^7.7.1",
     "babel-loader": "^8.0.6",
     "css-loader": "^4.1.0",
@@ -32,6 +33,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.11.0",
     "clean-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^3.2.0",
     "phaser": "^3.20.1",
