@@ -123,6 +123,8 @@ export default class Background extends Scene {
     }
 
     this.cameras.main.fadeOut(2000);
+    this.movingBackground = false;
+    this.changedCounterColor = false;
   }
 
   increaseDifficulty(step) {
@@ -175,8 +177,6 @@ export default class Background extends Scene {
    
     this.camera = this.cameras.main;
     this.gameScene = this.scene.get('game');
-    this.movingBackground = false;
-    this.changedCounterColor = false;
   }
 
   update() {
