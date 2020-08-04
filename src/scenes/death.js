@@ -64,8 +64,7 @@ export default class DeathScene extends Scene {
       color: '#fff',
     };
 
-    this.add.text(20, 20, `You died with ${this.score} items`, stylingOptions);
-    this.add.text(20, 60, "I'm ... dissapointed", stylingOptions);
+    this.add.text(20, 20, `You died with ${this.score} items ... I'm dissapointed`, stylingOptions);
   }
 
   replay() {
@@ -79,14 +78,14 @@ export default class DeathScene extends Scene {
       this.backgroundScene.titleScreenPosition();
 
       this.scene.stop();
+      this.scoreboardScene.scene.stop();
+
       backgroundCamera.fadeIn(2000);
       backgroundCamera.on('camerafadeincomplete', () => { onFadeInBackgroundEnd() });
     }
 
-    const camera = this.cameras.main;
-
-    camera.fadeOut();
-    camera.on('camerafadeoutcomplete', () => { fadeInBackground() });
+    this.fadeOutElements(1500, () => { fadeInBackground() });
+    this.scoreboardScene.fadeOutElements(1500);
   }
 
   addReplay() {
@@ -108,12 +107,19 @@ export default class DeathScene extends Scene {
     this.addReplay();
   }
 
+  addScores() {
+    this.scene.launch('scoreboard', { currentScore: this.score });
+  }
+
   create() {
     this.backgroundScene = this.scene.get('background');
 
     this.addFallingCharacter();
     this.addMessage();
+    this.addScores();
     this.handleDeath();
+
+    this.scoreboardScene = this.scene.get('scoreboard');
   }
 
   update() {
