@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import Scene from '../classes/sceneUtils'
+import Scene from '../classes/sceneUtils';
 
 // Importing Assets
 import cowboySelection from '../assets/Characters/Cowboy/selection.png';
@@ -9,12 +9,12 @@ export default class CharacterSelection extends Scene {
     super('characterSelection');
   }
 
-  preload () {
+  preload() {
     this.load.image('selection', cowboySelection);
   }
 
   addText() {
-    const stylingOptions = { 
+    const stylingOptions = {
       fontFamily: 'Alagard',
       fontSize: '29px',
       color: '#000',
@@ -40,7 +40,7 @@ export default class CharacterSelection extends Scene {
     this.centerImageHorizontally(this.cowboyImage);
 
     this.cowboyImage.setInteractive({ cursor: 'pointer' })
-      .on('pointerdown', () => { this.startGame() });
+      .on('pointerdown', () => { this.startGame(); });
   }
 
   create() {

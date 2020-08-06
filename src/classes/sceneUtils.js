@@ -3,11 +3,13 @@ import Phaser from 'phaser';
 export default class Scene extends Phaser.Scene {
   constructor(sceneKey) {
     super(sceneKey);
+
+    this.sceneKey = sceneKey;
   }
 
   centerTextHorizontally(textElement, centerText = true, divider = 2, multiplier = 1) {
     const textOff = centerText ? textElement.width / 2 : 0;
-    textElement.x = (this.game.config.width / divider) * multiplier - textOff; 
+    textElement.x = (this.game.config.width / divider) * multiplier - textOff;
   }
 
   centerImageHorizontally(image) {
@@ -19,17 +21,17 @@ export default class Scene extends Phaser.Scene {
   }
 
   fade(element, from, to, duration = 1500, onEnd = () => {}) {
-    element.alpha = from,
-      this.tweens.add({
-        targets: element,
-        alpha: to,
-        duration,
-        onComplete: () => { onEnd() }
-      });
+    element.alpha = from;
+    this.tweens.add({
+      targets: element,
+      alpha: to,
+      duration,
+      onComplete: () => { onEnd(); },
+    });
   }
 
   fadeInElements(duration = 1500, onEnd = () => {}) {
-    this.children.list.forEach( (children, index) => {
+    this.children.list.forEach((children, index) => {
       if (index === 0) { // Only add callback to first element
         this.fade(children, 0, 1, duration, onEnd);
       } else {
@@ -39,7 +41,7 @@ export default class Scene extends Phaser.Scene {
   }
 
   fadeOutElements(duration = 1500, onEnd = () => {}) {
-    this.children.list.forEach( (children, index) => {
+    this.children.list.forEach((children, index) => {
       if (index === 0) { // Only add callback to first element
         this.fade(children, 1, 0, duration, onEnd);
       } else {

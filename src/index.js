@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 // Plugins
-import InputTextPlugin from 'phaser3-rex-plugins/plugins/inputtext-plugin.js';
+import InputTextPlugin from 'phaser3-rex-plugins/plugins/inputtext-plugin';
 
 // Sass loading
 import './style/main.scss';
@@ -22,35 +22,35 @@ const config = {
   scale: {
     width: 800,
     height: 600,
-    autoCenter: Phaser.Scale.CENTER_BOTH
+    autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 450 }
+      gravity: { y: 450 },
     },
   },
   scene: [
     BackgroundScene,
     TitleScene,
     SelectionScene,
-    GameScene, 
+    GameScene,
     DeathScene,
     ScoreboardScene,
     CreditsScene,
   ],
-  parent: divId,
+  parent: 'divId',
   dom: {
-    createContainer: true
+    createContainer: true,
   },
   plugins: {
     global: [{
       key: 'rexInputTextPlugin',
       plugin: InputTextPlugin,
-      start: true
+      start: true,
     },
-    ]
-  }
+    ],
+  },
 };
 
 const game = new Phaser.Game(config);

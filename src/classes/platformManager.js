@@ -11,14 +11,14 @@ export default class platformManager extends Phaser.Physics.Arcade.Group {
     const movingPlatform = new MovingPlatform(scene, centerPlatform, y, addItem, texture, options);
 
     this.add(movingPlatform);
-    return movingPlatform
+    return movingPlatform;
   }
 
   moveVertically() {
-    this.children.entries.forEach( platform => platform.moveVertically() );
+    this.children.entries.forEach(platform => platform.moveVertically());
   }
 
   increaseDifficulty(step) {
-    this.children.entries.forEach( platform => platform.increaseDifficulty(step) );
+    this.children.entries.forEach(platform => platform.increaseDifficulty(step));
   }
 }

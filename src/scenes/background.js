@@ -22,7 +22,7 @@ export default class Background extends Scene {
   }
 
   preload() {
-    this.load.image('sky', skyAsset);  
+    this.load.image('sky', skyAsset);
     this.load.image('mountain01', mountainAsset01);
     this.load.image('mountain02', mountainAsset02);
     this.load.image('cloud01', cloudAsset01);
@@ -39,12 +39,12 @@ export default class Background extends Scene {
     this.tweens.addCounter({
       from: currentCameraPosition,
       to: targetPosition,
-      duration: duration,
+      duration,
       ease: 'Power1',
       onUpdate: (tween, target) => {
         this.cameras.main.scrollY = target.value;
       },
-      onComplete: () => { onEnd() }
+      onComplete: () => { onEnd(); },
     });
   }
 
@@ -59,7 +59,7 @@ export default class Background extends Scene {
     const MAX_Y = 250;
     const MIN_SCALE = 1;
     const MAX_SCALE = 3;
-    const MIN_DX = 12; 
+    const MIN_DX = 12;
     const MAX_DX = 20;
 
     this.frontClouds = this.add.group();
@@ -67,8 +67,8 @@ export default class Background extends Scene {
     this.backClouds = this.add.group();
 
     const addCloud = (index, x, y, scale, dx) => {
-      const cloud = this.add.image(x, y, `cloud0${index}`).
-        setScale(scale);
+      const cloud = this.add.image(x, y, `cloud0${index}`)
+        .setScale(scale);
       cloud.moveX = dx;
 
       if (index < 4) {
@@ -78,7 +78,7 @@ export default class Background extends Scene {
       } else {
         this.backClouds.add(cloud);
       }
-    }
+    };
 
     for (let i = 15; i >= 1; i -= 1) {
       const x = Phaser.Math.Between(MIN_X, MAX_X);
@@ -112,12 +112,12 @@ export default class Background extends Scene {
       duration: 150000,
       onUpdate: (tween, target) => {
         this.cameras.main.scrollY = target.value;
-      }
+      },
     });
   }
 
   handleDeath() {
-    if(this.runningTween) {
+    if (this.runningTween) {
       this.runningTween.stop();
       this.scrollTo(0, 3000);
     }
@@ -128,7 +128,7 @@ export default class Background extends Scene {
   }
 
   increaseDifficulty(step) {
-    if (!this.runningTween) return
+    if (!this.runningTween) return;
 
     const newTimeScale = this.runningTween.timeScale + step;
     this.runningTween.setTimeScale(newTimeScale);
@@ -138,11 +138,11 @@ export default class Background extends Scene {
     const getChildren = (group) => group.children.entries;
 
     const moveCloudGroup = (group, move) => {
-      getChildren(group).forEach( cloud => { 
-        if (cloud.x < -100) cloud.x = 900 // Re-spawns the cloud
-        cloud.x -= cloud.moveX
-      } );
-    }
+      getChildren(group).forEach(cloud => {
+        if (cloud.x < -100) cloud.x = 900; // Re-spawns the cloud
+        cloud.x -= cloud.moveX;
+      });
+    };
 
     moveCloudGroup(this.frontClouds, 0.25);
     moveCloudGroup(this.middleClouds, 0.05);
@@ -171,10 +171,10 @@ export default class Background extends Scene {
 
     this.addMountains();
     this.spawnClouds();
-    
+
     this.snapTo(-1800);
     this.launchTitle();
-   
+
     this.camera = this.cameras.main;
     this.gameScene = this.scene.get('game');
   }

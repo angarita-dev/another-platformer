@@ -1,9 +1,6 @@
 export default class Api {
-  constructor() {
-  }
-
   static async getDataRequest() {
-    const url = process.env.API_URL + process.env.API_KEY + '/scores';
+    const url = `${process.env.API_URL + process.env.API_KEY}/scores`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -12,20 +9,20 @@ export default class Api {
   }
 
   static async saveScoreRequest(name, score) {
-    const url = process.env.API_URL + process.env.API_KEY + '/scores';
+    const url = `${process.env.API_URL + process.env.API_KEY}/scores`;
 
     const requestBody = {
       user: name,
-      score
-    }
+      score,
+    };
 
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    }
+        'Content-Type': 'application/json',
+      },
+    };
 
     const response = await fetch(url, requestParams);
     const data = await response.json();
@@ -35,14 +32,14 @@ export default class Api {
 
   static orderData(items) {
     const compareFunc = (a, b) => {
-      if(a.score > b.score) {
+      if (a.score > b.score) {
         return -1;
       }
-      if(a.score < b.score) {
+      if (a.score < b.score) {
         return 1;
       }
       return 0;
-    }
+    };
     return items.sort(compareFunc);
   }
 
@@ -50,10 +47,8 @@ export default class Api {
     const requestPromise = Api.getDataRequest();
 
     const sortedData = requestPromise
-      .then( result => {
-        return Api.orderData(result.result);  
-      })
-      .catch( e => [] );
+      .then(result => Api.orderData(result.result))
+      .catch(e => []);
 
     return sortedData;
   }
@@ -62,8 +57,8 @@ export default class Api {
     const requestPromise = Api.saveScoreRequest(name, score);
 
     const requestSuccess = requestPromise
-      .then( result => true)
-      .catch( error => false);
+      .then(result => true)
+      .catch(error => false);
 
     return requestSuccess;
   }

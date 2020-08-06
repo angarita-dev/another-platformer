@@ -28,17 +28,8 @@ export default class MainGame extends Phaser.Scene {
       { frameWidth: 32, frameHeight: 32 });
   }
 
-  randomizePlatformTexture(platformObject) {
-    const rareTexture = Math.random() > 0.9; 
-    const platformIndex = rareTexture ?
-      Phaser.Math.Between(1, 2) :
-      Phaser.Math.Between(3, 4);
-
-    platformObject.setTexture(`platform0${platformIndex}`);
-  }
-
   addItemCounter() {
-    const stylingOptions = { 
+    const stylingOptions = {
       fontFamily: 'Alagard',
       fontSize: '22px',
       color: '#000',
@@ -63,7 +54,7 @@ export default class MainGame extends Phaser.Scene {
       key: 'collectibleTurn',
       frames: this.anims.generateFrameNumbers('collectible', { start: 0, end: 25 }),
       frameRate: 15,
-      repeat: -1
+      repeat: -1,
     });
 
     item.anims.play('collectibleTurn');
@@ -77,7 +68,7 @@ export default class MainGame extends Phaser.Scene {
     item.disableBody(true, true);
     item.destroy();
 
-    // Increases counter 
+    // Increases counter
     this.score += 1;
     this.scoreText.text = this.score;
 
@@ -142,7 +133,7 @@ export default class MainGame extends Phaser.Scene {
     this.addItems();
 
     // Adding Platforms
-    this.addPlatforms()
+    this.addPlatforms();
 
     // Adding Player
     this.addPlayer();
@@ -168,7 +159,8 @@ export default class MainGame extends Phaser.Scene {
 
   handleScrollDeath() {
     this.scene.start('death',
-      { endingX: this.player.x,
+      {
+        endingX: this.player.x,
         score: this.score,
       });
     this.scene.stop();
@@ -193,14 +185,14 @@ export default class MainGame extends Phaser.Scene {
       this.player.anims.play('right', true);
       if (this.player.body.touching.down) {
         this.player.setVelocityX(160);
-      } else if(this.player.body.velocity.x < 85) {
+      } else if (this.player.body.velocity.x < 85) {
         this.player.setVelocityX(85);
       }
     } else if (this.movingLeft) {
       this.player.anims.play('left', true);
       if (this.player.body.touching.down) {
         this.player.setVelocityX(-160);
-      } else if(this.player.body.velocity.x > -85) {
+      } else if (this.player.body.velocity.x > -85) {
         this.player.setVelocityX(-85);
       }
     } else {

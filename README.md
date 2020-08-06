@@ -22,7 +22,8 @@ Loading images via JavaScript module `import` is also supported.
 | `npm install` | Install project dependencies |
 | `npm start` | Build project and open web server running project |
 | `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) |
-| `npm test` | Runs tests on Api methods |
+| `npm run test` | Runs tests on Api methods |
+| `npm run linters` | Runs JS linters |
 
 ## License
 

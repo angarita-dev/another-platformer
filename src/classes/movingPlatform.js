@@ -20,11 +20,20 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     return Math.random() >= 1.0 - probability;
   }
 
+  static randomizePlatformTexture(platformObject) {
+    const rareTexture = Math.random() > 0.9;
+    const platformIndex = rareTexture
+      ? Phaser.Math.Between(1, 2)
+      : Phaser.Math.Between(3, 4);
+
+    platformObject.setTexture(`platform0${platformIndex}`);
+  }
+
   addItemStartingParameters() {
     return {
-      x: this.x + Phaser.Math.Between(-60, 60), 
+      x: this.x + Phaser.Math.Between(-60, 60),
       y: this.startY - 120,
-    }
+    };
   }
 
   handleItemAdd(probability) {
@@ -50,7 +59,7 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     this.handleItemAdd(this.START_ITEM_PROBABILIY);
     this.scene.add.existing(this);
 
-    this.scene.randomizePlatformTexture(this);
+    MovingPlatform.randomizePlatformTexture(this);
   }
 
   setupFriction() {
@@ -78,7 +87,7 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
   }
 
   increaseDifficulty(step) {
-    if (!this.runningTween) return
+    if (!this.runningTween) return;
 
     const newTimeScale = this.runningTween.timeScale + step;
     this.runningTween.setTimeScale(newTimeScale);
@@ -91,6 +100,6 @@ export default class MovingPlatform extends Phaser.Physics.Arcade.Image {
     this.runningTween.restart();
 
     this.handleItemAdd(this.RESPAWN_ITEM_PROBABILIY);
-    this.scene.randomizePlatformTexture(this);
+    MovingPlatform.randomizePlatformTexture(this);
   }
 }

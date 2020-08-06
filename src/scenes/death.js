@@ -16,7 +16,7 @@ export default class DeathScene extends Scene {
 
   preload() {
     this.load.spritesheet('falling', fallingAsset,
-      { frameWidth: 32, frameHeight: 32 }); 
+      { frameWidth: 32, frameHeight: 32 });
   }
 
   addFallingCharacter() {
@@ -45,20 +45,20 @@ export default class DeathScene extends Scene {
 
   moveFallingCharacter() {
     this.tweens.addCounter({
-      from: this.falling.y, 
+      from: this.falling.y,
       to: 0,
       duration: 2500,
-      onUpdate: (tween, target) => { this.falling.y = target.value }
+      onUpdate: (tween, target) => { this.falling.y = target.value; },
     });
   }
 
   fadeFallingCharacter() {
-    const removeCharacter = () => { this.falling.destroy() };
+    const removeCharacter = () => { this.falling.destroy(); };
     this.fade(this.falling, 1, 0, 2000, removeCharacter);
   }
 
   addMessage() {
-    const stylingOptions = { 
+    const stylingOptions = {
       fontFamily: 'Alagard',
       fontSize: '29px',
       color: '#fff',
@@ -72,7 +72,7 @@ export default class DeathScene extends Scene {
 
     const onFadeInBackgroundEnd = () => {
       this.scene.start('characterSelection');
-    }
+    };
 
     const fadeInBackground = () => {
       this.backgroundScene.titleScreenPosition();
@@ -81,23 +81,23 @@ export default class DeathScene extends Scene {
       this.scoreboardScene.scene.stop();
 
       backgroundCamera.fadeIn(2000);
-      backgroundCamera.on('camerafadeincomplete', () => { onFadeInBackgroundEnd() });
-    }
+      backgroundCamera.on('camerafadeincomplete', () => { onFadeInBackgroundEnd(); });
+    };
 
-    this.fadeOutElements(1500, () => { fadeInBackground() });
+    this.fadeOutElements(1500, () => { fadeInBackground(); });
     this.scoreboardScene.fadeOutElements(1500);
   }
 
   addReplay() {
-    const stylingOptions = { 
+    const stylingOptions = {
       fontFamily: 'Alagard',
       fontSize: '32px',
       color: '#fff',
     };
 
     this.replayText = this.add.text(0, 550, 'Replay', stylingOptions);
-    this.replayText.setInteractive({ cursor: 'pointer'})
-      .on('pointerdown', () => { this.replay() });
+    this.replayText.setInteractive({ cursor: 'pointer' })
+      .on('pointerdown', () => { this.replay(); });
     this.centerTextHorizontally(this.replayText);
   }
 
@@ -120,8 +120,5 @@ export default class DeathScene extends Scene {
     this.handleDeath();
 
     this.scoreboardScene = this.scene.get('scoreboard');
-  }
-
-  update() {
   }
 }

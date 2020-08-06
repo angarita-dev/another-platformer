@@ -7,7 +7,7 @@ export default class Credits extends Scene {
   }
 
   addCreditsText() {
-    const stylingOptions = { 
+    const stylingOptions = {
       fontFamily: 'Alagard',
       fontSize: '29px',
     };
@@ -16,14 +16,16 @@ export default class Credits extends Scene {
     const addText = (text, offAxis = 200, color = '#ddd') => {
       const styling = { ...stylingOptions, color };
 
-      return this.add.text(0, startCoord += offAxis, text, styling);
-    }
+      const textObject = this.add.text(0, startCoord += offAxis, text, styling);
+
+      return textObject;
+    };
 
     const leftColumn = [];
     const rightColumn = [];
     const centerColumn = [];
 
-    // Art & concepts text 
+    // Art & concepts text
     leftColumn.push(addText('Art & Concepts'));
     rightColumn.push(addText('Jerome of Astora', 0, '#920ec2'));
     rightColumn.push(addText('&', 35));
@@ -34,15 +36,15 @@ export default class Credits extends Scene {
     rightColumn.push(addText('Juan Manuel', 0, '#cc7d23'));
 
     // Special Thanks text
-    centerColumn.push(addText('Special thanks to:')); 
-    centerColumn.push(addText('Jerome of Astora', 100, '#920ec2')); 
-    centerColumn.push(addText('Slowpoke', 55, '#38abd1')); 
-    centerColumn.push(addText('&', 55)); 
+    centerColumn.push(addText('Special thanks to:'));
+    centerColumn.push(addText('Jerome of Astora', 100, '#920ec2'));
+    centerColumn.push(addText('Slowpoke', 55, '#38abd1'));
+    centerColumn.push(addText('&', 55));
     centerColumn.push(addText('You for playing <3', 55));
 
-    leftColumn.forEach(text => { this.centerTextHorizontally(text, false, 8) });
-    rightColumn.forEach(text => { this.centerTextHorizontally(text, true, 4, 3) });
-    centerColumn.forEach(text => { this.centerTextHorizontally(text) });
+    leftColumn.forEach(text => { this.centerTextHorizontally(text, false, 8); });
+    rightColumn.forEach(text => { this.centerTextHorizontally(text, true, 4, 3); });
+    centerColumn.forEach(text => { this.centerTextHorizontally(text); });
 
     const textElements = leftColumn.concat(rightColumn).concat(centerColumn);
 
@@ -57,7 +59,7 @@ export default class Credits extends Scene {
       duration: 30000,
       onComplete: () => {
         this.returnToMainMenu();
-      }
+      },
     });
   }
 
@@ -65,13 +67,13 @@ export default class Credits extends Scene {
     const launchTitleScene = () => {
       this.scene.stop();
       this.scene.launch('background');
-    }
+    };
 
     this.fadeOutElements(700, launchTitleScene);
   }
 
   addExitIcon() {
-    const stylingOptions = { 
+    const stylingOptions = {
       fontFamily: 'Alagard',
       fontSize: '29px',
       color: '#fff',
@@ -79,7 +81,7 @@ export default class Credits extends Scene {
 
     this.exitIcon = this.add.text(15, 15, 'x', stylingOptions);
     this.exitIcon.setInteractive({ cursor: 'pointer' })
-      .on('pointerdown', () => { this.returnToMainMenu() });
+      .on('pointerdown', () => { this.returnToMainMenu(); });
   }
 
   create() {
