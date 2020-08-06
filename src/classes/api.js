@@ -49,9 +49,11 @@ export default class Api {
   static getData() {
     const requestPromise = Api.getDataRequest();
 
-    const sortedData = requestPromise.then( result => {
-      return Api.orderData(result.result);  
-    })
+    const sortedData = requestPromise
+      .then( result => {
+        return Api.orderData(result.result);  
+      })
+      .catch( e => [] );
 
     return sortedData;
   }
