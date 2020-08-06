@@ -1,6 +1,6 @@
 # Another platformer
 
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/71ac9d36-b299-425d-ab9d-0d74cb446f0d/deploy-status)](https://app.netlify.com/sites/another-platformer/deploys)
 [![MIT license](https://img.shields.io/github/license/codingAngarita/another-platformer)](https://codingangarita.mit-license.org/)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
@@ -29,6 +29,10 @@ Loading images via JavaScript module `import` is also supported.
 
 This projects uses the MIT license.
 
+### Assets
+
+All the assets used in this project were made by me and "Jeromimo" please reach out before using them.
+
 ## Modifying the code
 
 Run `npm install` from your project directory. Then, you can start the local development
@@ -38,3 +42,5 @@ server by running `npm start`.
 After starting the development server with `npm start`, you can edit any files in the `src` folder
 and webpack will automatically recompile and reload your server (available at `http://localhost:8080`
 by default).
+
+Please make sure to run the linters & tests before submiting any changes.
