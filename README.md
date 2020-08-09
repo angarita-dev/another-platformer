@@ -4,6 +4,10 @@
 [![MIT license](https://img.shields.io/github/license/codingAngarita/another-platformer)](https://codingangarita.mit-license.org/)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
+<p align="center">
+  <img alt="Another platformer" src="https://i.imgur.com/XBl9jpq.png?1" />
+</p>
+
 A Phaser 3 platformer game with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/)
 that includes hot-reloading for development and production-ready builds.
 
