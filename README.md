@@ -15,8 +15,10 @@ Used [phaser3-project-template](https://github.com/photonstorm/phaser3-project-t
 
 Loading images via JavaScript module `import` is also supported.
 
+#### You can read more about the project and how I built it [here](https://www.notion.so/Another-platfomer-252734103ed24f26a87967fd79775c7d)
+
 ## How to play
-Check a live version of the game [here](https://another-platformer.netlify.app/).
+#### Check a live version of the game [here](https://another-platformer.netlify.app/).
 
 You can navigate the menus clicking the desired options.
 
