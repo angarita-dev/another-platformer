@@ -1,0 +1,23 @@
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  font-family: "Alagard", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  border-bottom: 1px solid #fff !important;
+}
+
+@font-face {
+  font-family: "Alagard";
+  src: url("../assets/Fonts/alagard.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}

@@ -1,31 +1,55 @@
 import Phaser from 'phaser';
-import logoImg from './assets/logo.png';
 
-function preload() {
-  this.load.image('logo', logoImg);
-}
+// Plugins
+import InputTextPlugin from 'phaser3-rex-plugins/plugins/inputtext-plugin';
 
-function create() {
-  const logo = this.add.image(400, 150, 'logo');
+// Sass loading
+import './style/main.scss';
 
-  this.tweens.add({
-    targets: logo,
-    y: 450,
-    duration: 2000,
-    ease: 'Power2',
-    yoyo: true,
-    loop: -1,
-  });
-}
+// Scenes
+
+import SelectionScene from './scenes/characterSelection';
+import BackgroundScene from './scenes/background';
+import GameScene from './scenes/game';
+import DeathScene from './scenes/death';
+import TitleScene from './scenes/title';
+import CreditsScene from './scenes/credits';
+import ScoreboardScene from './scenes/scoreboard';
 
 const config = {
-  type: Phaser.AUTO,
-  parent: 'phaser-example',
-  width: 800,
-  height: 600,
-  scene: {
-    preload,
-    create,
+  type: Phaser.CANVAS,
+  antialias: false,
+  scale: {
+    width: 800,
+    height: 600,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 450 },
+    },
+  },
+  scene: [
+    BackgroundScene,
+    TitleScene,
+    SelectionScene,
+    GameScene,
+    DeathScene,
+    ScoreboardScene,
+    CreditsScene,
+  ],
+  parent: 'divId',
+  dom: {
+    createContainer: true,
+  },
+  plugins: {
+    global: [{
+      key: 'rexInputTextPlugin',
+      plugin: InputTextPlugin,
+      start: true,
+    },
+    ],
   },
 };
 
