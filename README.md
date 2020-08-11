@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/71ac9d36-b299-425d-ab9d-0d74cb446f0d/deploy-status)](https://another-platformer.netlify.app/)
 [![MIT license](https://img.shields.io/github/license/codingAngarita/another-platformer)](https://codingangarita.mit-license.org/)
-[![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 <p align="center">
   <img alt="Another platformer" src="https://i.imgur.com/XBl9jpq.png?1" />
